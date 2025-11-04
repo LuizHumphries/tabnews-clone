@@ -27,7 +27,9 @@
     "migration:up": "node-pg-migrate -m infra/migrations --envPath .env.development up",
     "wait-for-postgres": "node infra/scripts/wait-for-postgres.js",
     "prepare": "husky",
-    "commit": "cz"
+    "commit": "cz",
+    "scan:secrets": "gitleaks detect --no-banner",
+    "scan:secrets:staged": "gitleaks protect --staged --redact --no-banner"
   },
   "dependencies": {
     "async-retry": "^1.3.3",
