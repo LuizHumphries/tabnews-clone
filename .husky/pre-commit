@@ -1,0 +1,17 @@
+# fail fast if gitleaks missing
+command -v gitleaks >/dev/null 2>&1 || {
+  echo "🛑 gitleaks not found in PATH. Install with 'winget install Gitleaks.Gitleaks' or 'choco install gitleaks'." >&2
+  exit 1
+}
+
+# scan staged content only (fast), hide secrets in output
+gitleaks protect --staged --redact --no-banner
+status=$?
+
+if [ $status -ne 0 ]; then
+  echo ""
+  echo "🛑 Gitleaks found potential secrets in staged changes."
+  echo "→ Fix or unstage the offending lines, then commit again."
+  echo "Tip: run 'npm run scan:secrets' to scan entire repo."
+  exit $status
+fi
