@@ -23,20 +23,22 @@ exports.up = (pgm) => {
       unique: true,
     },
 
-    // Why 72 in length? https://security.stackexchange.com/a/39851
+    // Why 60 in length? https://www.npmjs.com/package/bcrypt#hash-info
     password: {
-      type: "varchar(72)",
+      type: "varchar(60)",
       notNull: true,
     },
 
     created_at: {
       type: "timestamptz",
-      default: pgm.func("now()"),
+      notNull: true,
+      default: pgm.func("timezone('utc', now())"),
     },
 
     updated_at: {
       type: "timestamptz",
-      default: pgm.func("now()"),
+      notNull: true,
+      default: pgm.func("timezone('utc', now())"),
     },
   });
 };
